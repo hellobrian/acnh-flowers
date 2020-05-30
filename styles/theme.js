@@ -1,8 +1,18 @@
 import { data } from "pages/api/flowers/cosmos";
-const cosmos = data.flowers.map((flower) => ({ [flower.name]: flower.hex }));
+
+function getFlowerColors(flowerData) {
+  return flowerData
+    .map((flower) => ({ [flower.name]: flower.hex }))
+    .reduce((result, current) => {
+      return Object.assign(result, current);
+    }, {});
+}
+
+const cosmos = getFlowerColors(data.flowers);
 
 export default {
   space: [0, 4, 8, 16, 32, 64],
+  fontSizes: [12, 14, 16, 20, 24, 32, 48, 64],
   fonts: {
     body: "system-ui, sans-serif",
     heading: '"Avenir Next", sans-serif',
@@ -13,5 +23,10 @@ export default {
     background: "#fff",
     primary: "#33e",
     cosmos,
+  },
+  text: {
+    heading: {
+      fontFamily: "heading",
+    },
   },
 };

@@ -1,12 +1,41 @@
 // import App from 'next/app'
-import { ThemeProvider } from "theme-ui";
+import React from "react";
+import { useRouter } from "next/router";
+import { MDXProvider } from "@mdx-js/react";
+import { Box, Heading, Text, ThemeProvider } from "theme-ui";
 import theme from "styles/theme";
+const mdComponents = {
+  h1: (props) => <Heading as="h1" {...props} />,
+  h2: (props) => <Heading as="h2" {...props} />,
+  h3: (props) => <Heading as="h3" {...props} />,
+  pre: (props) => (
+    <Text sx={{ bg: "primary", color: "text", p: 3 }} as="pre" {...props} />
+  ),
+  code: (props) => (
+    <Text
+      sx={{ bg: "primary", color: "cosmos.pink", fontSize: 3 }}
+      as="code"
+      {...props}
+    />
+  ),
+};
 
-function MyApp({ Component, pageProps }) {
-  console.log({ theme });
+function MyApp(props) {
+  const { Component, pageProps } = props;
+  const router = useRouter();
+  const isDocsPath = router.pathname.includes("/docs");
+
   return (
     <ThemeProvider theme={theme}>
-      <Component {...pageProps} />
+      {isDocsPath ? (
+        <MDXProvider components={mdComponents}>
+          <Box sx={{ p: "m" }}>
+            <Component {...pageProps} />
+          </Box>
+        </MDXProvider>
+      ) : (
+        <Component {...pageProps} />
+      )}
     </ThemeProvider>
   );
 }

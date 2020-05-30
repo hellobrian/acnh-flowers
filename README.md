@@ -37,4 +37,5 @@ Check out our [Next.js deployment documentation](https://nextjs.org/docs/deploym
 
 ## Resources
 
-- https://codepen.io/brianhan/pen/ExVqyMB
+- Simple tool for grabbing dominant image colors: https://codepen.io/brianhan/pen/ExVqyMB
+- Using mdx with next.js: https://dev.to/whoisryosuke/using-mdx-with-nextjs-and-when-to-go-gatsby-5e4c

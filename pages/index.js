@@ -1,8 +1,8 @@
 import React from "react";
 import Head from "next/head";
 import useSWR from "swr";
-
-const fetcher = (url) => fetch(url).then((r) => r.json());
+import { fetcher } from "utils/fetcher";
+import { Grid, Flex, Box } from "theme-ui";
 
 export default function Home() {
   const { data, error } = useSWR("/api/flowers/cosmos", fetcher);
@@ -12,11 +12,10 @@ export default function Home() {
   }
 
   return (
-    <div
-      style={{
-        display: "grid",
-        gridGap: "2rem",
-        gridTemplateColumns: "1fr 1fr 1fr",
+    <Grid
+      gap={2}
+      columns={[3]}
+      sx={{
         justifyItems: "center",
       }}
     >
@@ -29,23 +28,15 @@ export default function Home() {
 
       {data &&
         data.flowers.map((flower) => (
-          <div
-            style={{
-              display: "grid",
-              gridGap: 8,
-              gridTemplateColumns: "1fr 1fr",
-              justifyItems: "center",
-              alignItems: "center",
-            }}
+          <Flex
+            key={flower.id}
+            sx={{ alignItems: "center", justifyContent: "center" }}
           >
-            <div
-              style={{
+            <Box
+              sx={{
                 background: flower.hex,
                 width: 80,
                 height: 80,
-                display: "flex",
-                justifyContent: "center",
-                alignItems: "center",
                 border: "1px solid black",
               }}
             />
@@ -54,8 +45,8 @@ export default function Home() {
               src={flower.image}
               alt={`flower-${flower.name}`}
             />
-          </div>
+          </Flex>
         ))}
-    </div>
+    </Grid>
   );
 }
